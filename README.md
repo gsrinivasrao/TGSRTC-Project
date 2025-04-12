@@ -20,10 +20,12 @@ A full-stack application developed to manage depot operational data using a Reac
 ## 🚀 How It Works
 
 1. **Frontend (React)**:
+
    - Provides a form for users to submit depot operation details.
    - Sends a POST request to the Django API.
 
 2. **Backend (Django)**:
+
    - Accepts form data and validates it.
    - Inserts the data into a MySQL table.
    - Pushes the same data to a Google Sheet using Apps Script Web App URLs.
@@ -34,5 +36,16 @@ A full-stack application developed to manage depot operational data using a Reac
 
 ## 📂 Folder Structure (Simplified)
 
-react_django_integration/ ├── backend/ │ ├── form_api/ │ │ ├── views.py │ │ ├── urls.py │ │ ├── utils.py │ │ └── models.py │ └── react_django_integration/ │ └── settings.py ├── frontend/ │ └── src/ │ └── components/ │ └── Form.jsx 
+react_django_integration/ ├── backend/ │ ├── form_api/ │ │ ├── views.py │ │ ├── urls.py │ │ ├── utils.py │ │ └── models.py │ └── react_django_integration/ │ └── settings.py ├── frontend/ │ └── src/ │ └── components/ │ └── Form.jsx
 
+Google Sheets & Apps Script:
+
+Create or open a Google Sheet and go to Extensions > Apps Script.
+
+Paste your Apps Script code (that handles data insertion).
+
+Deploy it as a Web App (accessible via POST).
+
+Share the sheet with Anyone with the link access and copy the Web App URL.
+
+Update your Django backend with this Web App URL in your utils.py.
