@@ -1,44 +1,38 @@
-# React-Django Google Sheets Integration (TGSRTC)
+# TGSRTC Depot Operations Form Management
 
-A full-stack application that allows users to submit form data through a React frontend, processed by a Django backend, and dynamically stored in a Google Sheet using the Google Sheets API.
+A full-stack application developed to manage depot operational data using a React frontend and a Django backend. Form submissions are dynamically stored in both a **MySQL database** and **Google Sheets** via Apps Script, without requiring a Google Cloud account.
 
----
+## 🔧 Tech Stack
 
-## 🚀 Features
+- **Frontend**: React
+- **Backend**: Django (Python)
+- **Database**: MySQL
+- **External Integration**: Google Sheets with Google Apps Script
 
-- React frontend form for user input.
-- Django REST API backend to process submissions.
-- Google Sheets integration for dynamic data storage.
-- Automatically creates new sheets and headers based on form inputs.
-- Checks for existing dates to prevent duplicate entries.
+## 📌 Features
 
----
+- Simple and intuitive web form for capturing depot data
+- Stores submitted data into:
+  - A structured **MySQL database**
+  - Corresponding **Google Sheets** (based on dynamic column mapping)
+- No use of Google Cloud APIs — only Apps Script and shared sheet links
 
-## 🛠️ Tech Stack
+## 🚀 How It Works
 
-- **Frontend**: React, Axios
-- **Backend**: Django, Django REST Framework
-- **Database/Storage**: Google Sheets via Google Sheets API
-- **Other**: Python, Google Cloud Service Account
+1. **Frontend (React)**:
+   - Provides a form for users to submit depot operation details.
+   - Sends a POST request to the Django API.
 
----
+2. **Backend (Django)**:
+   - Accepts form data and validates it.
+   - Inserts the data into a MySQL table.
+   - Pushes the same data to a Google Sheet using Apps Script Web App URLs.
 
-## ⚙️ Setup Instructions
+3. **Google Sheets**:
+   - Sheets are shared and contain Apps Script functions to handle incoming requests and dynamically create/update columns.
+   - Apps Script handles the insertion of new rows and creation of headers if they don’t exist.
 
-### 🔐 Prerequisites
-- Python 3.x
-- Node.js + npm
-- Google Cloud service account JSON (`credentials.json`) with access to Google Sheets API
-- Google Sheet created with correct permissions
+## 📂 Folder Structure (Simplified)
 
-### 🧰 Backend Setup
-
-```bash
-cd backend
-pip install -r requirements.txt  # Include Django, djangorestframework, google-api-python-client, etc.
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
-
-
+react_django_integration/ ├── backend/ │ ├── form_api/ │ │ ├── views.py │ │ ├── urls.py │ │ ├── utils.py │ │ └── models.py │ └── react_django_integration/ │ └── settings.py ├── frontend/ │ └── src/ │ └── components/ │ └── Form.jsx 
 
