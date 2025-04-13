@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
-#from form_api.models import SheetTable
 from .models import SheetMetadata
+#from form_api.models import SheetTable
 from form_api.utils import create_table_for_sheet, insert_into_table, check_date_exists
 import json
 import logging
@@ -65,10 +65,22 @@ def submit_form(request):
             # Insert data into the table
             insert_into_table(sheet_name, data)
 
+            # SEND DATA TO GOOGLE SHEET
+            google_script_url = SHEET_URLS.get(sheet_name)
+            if not google_script_url:
+                return JsonResponse({"error": f"Google Sheet URL not found for sheet '{sheet_name}'"}, status=400)
+            
+            response = requests.post(google_script_url, json=data, timeout=10)
+            response.raise_for_status()
+
             return JsonResponse({"message": "Data submitted successfully!"})
+        except requests.exceptions.RequestException as e:
+            
+            return JsonResponse({"error": f"Error communicating with Google Sheets: {str(e)}"}, status=500)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
 @csrf_exempt
 def get_submitted_data(request):
     if request.method == "GET":
